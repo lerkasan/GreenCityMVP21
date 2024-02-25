@@ -143,11 +143,6 @@ public class ModelUtils {
                 .expiryDate(LocalDateTime.of(2021, 7, 7, 7, 7))
                 .token("toooookkkeeeeen42324532542")
                 .build())
-            .userFriends(Collections.singletonList(
-                UserVO.builder()
-                    .id(75L)
-                    .name("Andrew")
-                    .build()))
             .refreshTokenKey("refreshtoooookkkeeeeen42324532542")
             .ownSecurity(null)
             .dateOfRegistration(LocalDateTime.of(2020, 6, 6, 13, 47))

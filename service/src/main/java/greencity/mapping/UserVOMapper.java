@@ -45,6 +45,7 @@ public class UserVOMapper extends AbstractConverter<User, UserVO> {
             .showShoppingList(user.getShowShoppingList())
             .showEcoPlace(user.getShowEcoPlace())
             .showLocation(user.getShowLocation())
+            .lastActivityTime(user.getLastActivityTime())
             .build();
     }
 }
