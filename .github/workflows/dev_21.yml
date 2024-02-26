@@ -17,7 +17,7 @@ on:
 
 env:
   JAVA_VERSION: 21
-  JAVA_DISTRIBUTION: 'oracle'  # 'temurin'
+  JAVA_DISTRIBUTION: 'temurin'  # 'toracle'
   SETUP_JAVA_CACHE: 'maven'
 
 jobs:
