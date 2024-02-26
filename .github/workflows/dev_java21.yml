@@ -53,7 +53,7 @@ jobs:
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
         if: success() || failure()
         with:
-          name: JUnit Test Report
+          name: JUnit Test Report - Core
           path: core/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
@@ -62,7 +62,7 @@ jobs:
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
         if: success() || failure()
         with:
-          name: JUnit Test Report
+          name: JUnit Test Report - Service
           path: service/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
@@ -71,7 +71,7 @@ jobs:
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
         if: success() || failure()
         with:
-          name: JUnit Test Report
+          name: JUnit Test Report - Service-API
           path: service-api/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
