@@ -18,12 +18,12 @@ on:
 env:
   JAVA_VERSION: 21
   JAVA_DISTRIBUTION: 'oracle'  # 'temurin'
+  SETUP_JAVA_CACHE: 'maven'
 
 jobs:
 
   test:
     name: Run Backend Unit Tests
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout backend repository
@@ -34,6 +34,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: ${{ env.SETUP_JAVA_CACHE }}
 
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode --no-transfer-progress clean test
@@ -48,20 +49,36 @@ jobs:
             service/target/surefire-reports/*.xml
             service-api/target/surefire-reports/*.xml
 
-      - name: Publish JUnit Test Report
+      - name: Publish JUnit Test Report - Core
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
         if: success() || failure()
         with:
           name: JUnit Test Report
-          path: |
-            core/target/surefire-reports/*.xml
-            service/target/surefire-reports/*.xml
-            service-api/target/surefire-reports/*.xml
+          path: core/target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
+
+      - name: Publish JUnit Test Report - Service
+        uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
+        if: success() || failure()
+        with:
+          name: JUnit Test Report
+          path: service/target/surefire-reports/*.xml
+          reporter: java-junit
+          fail-on-error: true
+
+      - name: Publish JUnit Test Report - Service-API
+        uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
+        if: success() || failure()
+        with:
+          name: JUnit Test Report
+          path: service-api/target/surefire-reports/*.xml
           reporter: java-junit
           fail-on-error: true
 
   build:
     name: Build Backend
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout backend repository
@@ -72,6 +89,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: ${{ env.SETUP_JAVA_CACHE }}
 
       - name: Build a JAR package via Maven
         run: mvn --batch-mode --no-transfer-progress -DskipTests clean package
