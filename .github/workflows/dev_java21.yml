@@ -55,9 +55,7 @@ jobs:
         with:
           name: JUnit Test Reports
           path: |
-            core/target/surefire-reports/*.xml,
-            service/target/surefire-reports/*.xml,
-            service-api/target/surefire-reports/*.xml
+            **/target/surefire-reports/*.xml
           reporter: java-junit
 
 #      - name: Publish JUnit Test Report - Service
