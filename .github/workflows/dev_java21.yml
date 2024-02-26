@@ -59,7 +59,6 @@ jobs:
             service/target/surefire-reports/*.xml,
             service-api/target/surefire-reports/*.xml
           reporter: java-junit
-          fail-on-error: true
 
 #      - name: Publish JUnit Test Report - Service
 #        uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
