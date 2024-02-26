@@ -62,6 +62,7 @@ public class EcoNewsController {
      * @return dto {@link AddEcoNewsDtoResponse} instance.
      * @author Yuriy Olkhovskyi & Kovaliv Taras.
      */
+    @SuppressWarnings("checkstyle:indentation")
     @Operation(summary = "Add new eco news.")
     @ResponseStatus(value = HttpStatus.CREATED)
     @ApiResponses(value = {@ApiResponse(responseCode = "201", description = HttpStatuses.CREATED,
