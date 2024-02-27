@@ -36,6 +36,11 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 #          cache: ${{ env.SETUP_JAVA_CACHE }}
 
+      - name: Customize Maven version
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.2
+
       - name: Check Java and Maven versions
         run: |
           java --version
