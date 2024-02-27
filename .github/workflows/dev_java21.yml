@@ -41,12 +41,12 @@ jobs:
         with:
           maven-version: 3.9.2
 
-      - name: Check Java and Maven versions
+      - name: Check Java and Maven versions, and clean local Maven repository
         run: |
           java --version
           mvn --version
           mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
-
+          rm -rf ~/.m2/repository
 
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
