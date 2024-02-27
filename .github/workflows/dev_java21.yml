@@ -42,11 +42,12 @@ jobs:
       #        with:
       #          maven-version: 3.9.2
       #
-      #      - name: Check Java and Maven versions, and clean local Maven repository
-      #        run: |
-      #          java --version
-      #          mvn --version
-      #          mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
+
+      - name: Check Java and Maven versions, and clean local Maven repository
+        run: |
+          java --version
+          mvn --version
+          mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
       #          rm -rf $(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)
       ##          rm -rf ~/.m2/repository
 
