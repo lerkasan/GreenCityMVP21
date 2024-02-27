@@ -36,6 +36,11 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 #          cache: ${{ env.SETUP_JAVA_CACHE }}
 
+      - name: Check Java and Maven versions
+        run: |
+          java --version
+          mvn --version
+
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
 
