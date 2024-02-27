@@ -45,6 +45,8 @@ jobs:
         run: |
           java --version
           mvn --version
+          mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
+
 
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
