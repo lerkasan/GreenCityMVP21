@@ -46,7 +46,8 @@ jobs:
           java --version
           mvn --version
           mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
-          rm -rf ~/.m2/repository
+          rm -rf $(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)
+#          rm -rf ~/.m2/repository
 
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
