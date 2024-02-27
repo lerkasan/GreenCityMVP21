@@ -34,7 +34,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-          cache: ${{ env.SETUP_JAVA_CACHE }}
+#          cache: ${{ env.SETUP_JAVA_CACHE }}
 
       - name: Run Unit Tests via Maven
         run: mvn --batch-mode dependency:list clean test
