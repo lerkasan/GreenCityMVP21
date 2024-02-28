@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     #    container: maven:3.9.6-eclipse-temurin-21-alpine
     steps:
-      - name: Checkout backend repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
+#      - name: Checkout backend repository
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
 
-      - name: Build Docker Image
-        run: docker build -f Dockerfile.check .
+      - name: Pull and Run Docker Image
+        run: docker run lerkasan/experiment:latest

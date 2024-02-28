@@ -1,0 +1,12 @@
+FROM maven:3.9.6-eclipse-temurin-21-alpine
+
+RUN mkdir /app
+
+COPY . /app
+
+WORKDIR /app
+
+RUN mvn --batch-mode dependency:resolve-plugins dependency:go-offline
+#RUN mvn --batch-mode --no-transfer-progress clean test
+
+CMD ["mvn", "clean", "test"]
