@@ -15,6 +15,9 @@ on:
       - dev_java21
       - my_dev_java21
 
+  # for debugging purposes
+  workflow_dispatch:
+
 env:
   JAVA_VERSION: 21
   JAVA_DISTRIBUTION: 'oracle'  # 'temurin'
