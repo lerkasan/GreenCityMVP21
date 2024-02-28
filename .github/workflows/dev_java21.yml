@@ -5,15 +5,11 @@ on:
     branches:
       - main
       - master
-      - dev_java21
-      - my_dev_java21
 
   pull_request:
     branches:
       - main
       - master
-      - dev_java21
-      - my_dev_java21
 
   # for debugging purposes
   workflow_dispatch:
