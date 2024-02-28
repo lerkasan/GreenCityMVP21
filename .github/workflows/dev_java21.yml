@@ -50,6 +50,7 @@ jobs:
           mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout
           echo "\nBEFORE TESTS:\n"
           df -h
+          du -sh $JAVA_HOME
           du -sh ~/.m2/repository
 
       #          rm -rf $(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)
@@ -63,6 +64,7 @@ jobs:
         run: |
           echo "\nAFTER TESTS:\n"
           df -h
+          du -sh $JAVA_HOME
           du -sh ~/.m2/repository
 
       - name: Upload JUnit Test Report as Artifact
