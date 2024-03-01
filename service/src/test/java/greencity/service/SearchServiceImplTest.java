@@ -34,7 +34,7 @@ public class SearchServiceImplTest {
     @ParameterizedTest
     @CsvSource({
             "test, en", "test, ua", "test, ru"})
-    void search_WithValidSearchQueryAndLanguageCode_ShouldReturnSearchResponseDto(String searchQuery,
+    void search_whenSearchQueryAndLanguageCodeValid_returnSearchResponseDto(String searchQuery,
                                                                                   String languageCode) {
         PageableDto<SearchNewsDto> pageableDto = Mockito.mock(PageableDto.class);
         when(ecoNewsService.search(searchQuery, languageCode)).thenReturn(pageableDto);
@@ -51,7 +51,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    void search_WithNullSearchQuery_ShouldCallEcoNewsServiceWithNulls() {
+    void search_whenSearchQueryIsNull_shouldCallEcoNewsServiceWithNulls() {
         PageableDto<SearchNewsDto> pageableDto = Mockito.mock(PageableDto.class);
         when(ecoNewsService.search(null, null)).thenReturn(pageableDto);
 
@@ -66,14 +66,14 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    void searchAllNews_WithNullSearchQuery_ShouldCallEcoNewsServiceWithNulls() {
+    void searchAllNews_whenSearchQueryIsNull_shouldCallEcoNewsServiceWithNulls() {
         searchService.searchAllNews(null, null, null);
 
         verify(ecoNewsService).search(null, null, null);
     }
 
     @Test
-    void searchAllNews_WithValidSearchQueryAndLanguageCode_ShouldCallEcoNewsServiceWithValidParameters() {
+    void searchAllNews_whenSearchQueryAndLanguageCodeValid_shouldCallEcoNewsServiceWithValidParameters() {
         Pageable pageable = Mockito.mock(Pageable.class);
         PageableDto<SearchNewsDto> pageableDto = Mockito.mock(PageableDto.class);
         when(ecoNewsService.search(pageable, "test", "en")).thenReturn(pageableDto);
