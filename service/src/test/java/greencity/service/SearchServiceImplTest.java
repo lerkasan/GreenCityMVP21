@@ -1,35 +1,32 @@
 package greencity.service;
 
-import greencity.dto.PageableDto;
-import greencity.dto.search.SearchNewsDto;
-import greencity.dto.search.SearchResponseDto;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-public class SearchServiceImplTest {
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 
+import greencity.dto.PageableDto;
+import greencity.dto.search.SearchNewsDto;
+import greencity.dto.search.SearchResponseDto;
+
+@ExtendWith(MockitoExtension.class)
+class SearchServiceImplTest {
+
+    @InjectMocks
     public SearchServiceImpl searchService;
 
     @Mock
     public EcoNewsService ecoNewsService;
-
-    @BeforeEach
-    public void init() {
-        searchService = new SearchServiceImpl(ecoNewsService);
-    }
 
     @ParameterizedTest
     @CsvSource({
