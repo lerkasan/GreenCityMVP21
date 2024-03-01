@@ -1,26 +1,27 @@
 package greencity.validator;
 
-import greencity.annotations.ValidLanguage;
-import greencity.service.LanguageService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import greencity.annotations.ValidLanguage;
+import greencity.service.LanguageService;
 
 @ExtendWith(MockitoExtension.class)
 public class LanguageValidatorTest {
@@ -28,6 +29,7 @@ public class LanguageValidatorTest {
     @Mock
     private LanguageService languageService;
 
+    @InjectMocks
     private LanguageValidator languageValidator;
 
     private static Stream<List<String>> validLanguageCodesProvider() {
@@ -37,11 +39,6 @@ public class LanguageValidatorTest {
 
     private static Stream<List<String>> invalidLanguageCodesProvider() {
         return Stream.of(Arrays.asList("fr", "de"), Arrays.asList("ua", "it"), Arrays.asList("ja", "ko"));
-    }
-
-    @BeforeEach
-    public void init() {
-        languageValidator = new LanguageValidator(languageService);
     }
 
     @ParameterizedTest
