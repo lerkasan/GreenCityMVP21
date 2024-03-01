@@ -74,7 +74,7 @@ class CustomShoppingListMapperTest {
     }
 
     @Test
-    void mapAllToList_WithValidInput_ShouldMapCorrectly() {
+    void mapAllToList_CustomShoppingListMapperTest_ShouldMapCorrectly() {
         CustomShoppingListItemResponseDto dto1 = new CustomShoppingListItemResponseDto();
         CustomShoppingListItemResponseDto dto2 = new CustomShoppingListItemResponseDto();
         List<CustomShoppingListItemResponseDto> dtoList = Arrays.asList(dto1, dto2);
@@ -86,14 +86,14 @@ class CustomShoppingListMapperTest {
     }
 
     @Test
-    void mapAllToList_WithNullInput_ShouldReturnEmptyList() {
+    void mapAllToList_CustomShoppingListMapperTest_NullPointerException() {
         assertThrows(NullPointerException.class, () -> {
             customShoppingListMapper.mapAllToList(null);
         });
     }
 
     @Test
-    void mapAllToList_WithEmptyInputList_ShouldReturnEmptyList() {
+    void mapAllToList_CustomShoppingListMapperTest_ShouldReturnEmptyList() {
         List<CustomShoppingListItemResponseDto> dtoList = Arrays.asList();
 
         List<CustomShoppingListItem> actual = customShoppingListMapper.mapAllToList(dtoList);
