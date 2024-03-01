@@ -1,13 +1,9 @@
 package greencity.mapping;
 
-import greencity.ModelUtils;
 import greencity.dto.category.CategoryDto;
-import greencity.dto.user.UserShoppingListItemResponseDto;
 import greencity.entity.Category;
-import greencity.entity.UserShoppingListItem;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
