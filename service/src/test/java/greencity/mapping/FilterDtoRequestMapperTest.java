@@ -30,7 +30,6 @@ class FilterDtoRequestMapperTest {
                 .build();
 
         Filter actual = filterDtoRequestMapper.convert(filterUserDto);
-        System.out.println(actual);
 
         assertNotNull(actual);
         assertEquals(filterUserDto.getName(), actual.getName());
