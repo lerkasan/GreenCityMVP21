@@ -1,15 +1,18 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
 import greencity.dto.habit.AddCustomHabitDtoRequest;
 import greencity.entity.Habit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 class CustomHabitMapperTest {
+
     private final ModelMapper modelMapper = new ModelMapper();
     private final CustomHabitMapper customHabitMapper = new CustomHabitMapper();
 
@@ -37,7 +40,7 @@ class CustomHabitMapperTest {
     }
 
     @Test
-    void convert_CustomHabitMapperTest_ShouldMapToCategoryWithNullFields() {
+    void convert_CustomHabitMapperTest_ShouldMapWithNullFields() {
         AddCustomHabitDtoRequest addCustomHabitDtoRequest = new AddCustomHabitDtoRequest();
         Habit actual = customHabitMapper.convert(addCustomHabitDtoRequest);
 
@@ -47,10 +50,9 @@ class CustomHabitMapperTest {
         assertNull(actual.getDefaultDuration());
     }
 
-    @Test
-    void convert_CustomHabitMapperTest_ShouldReturnNullPointerException() {
-        AddCustomHabitDtoRequest addCustomHabitDtoRequest = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_CustomHabitMapperTest_ShouldReturnNullPointerException(AddCustomHabitDtoRequest addCustomHabitDtoRequest) {
         assertThrows(NullPointerException.class, () -> {
             customHabitMapper.convert(addCustomHabitDtoRequest);
         });
