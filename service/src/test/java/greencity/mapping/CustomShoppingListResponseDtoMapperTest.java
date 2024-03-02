@@ -1,22 +1,26 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import greencity.dto.shoppinglistitem.CustomShoppingListItemResponseDto;
 import greencity.entity.CustomShoppingListItem;
 import greencity.enums.ShoppingListItemStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 class CustomShoppingListResponseDtoMapperTest {
+
     private final ModelMapper modelMapper = new ModelMapper();
     private final CustomShoppingListResponseDtoMapper customShoppingListResponseDtoMapper = new CustomShoppingListResponseDtoMapper();
+
     @Test
     void convert_CustomShoppingListResponseDtoMapperTest_ShouldMapCorrectly() {
         CustomShoppingListItem customShoppingListItem = new CustomShoppingListItem();
@@ -40,7 +44,7 @@ class CustomShoppingListResponseDtoMapperTest {
     }
 
     @Test
-    void convert_CustomShoppingListResponseDtoMapperTest_ShouldMapToCategoryWithNullFields() {
+    void convert_CustomShoppingListResponseDtoMapperTest_ShouldMapWithNullFields() {
         CustomShoppingListItem customShoppingListItem = new CustomShoppingListItem();
 
         CustomShoppingListItemResponseDto actual = customShoppingListResponseDtoMapper.convert(customShoppingListItem);
@@ -50,10 +54,10 @@ class CustomShoppingListResponseDtoMapperTest {
         assertNull(actual.getText());
     }
 
-    @Test
-    void convert_CustomShoppingListResponseDtoMapperTest_ShouldReturnNullPointerException() {
-        CustomShoppingListItem customShoppingListItem = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_CustomShoppingListResponseDtoMapperTest_ShouldReturnNullPointerException(
+            CustomShoppingListItem customShoppingListItem) {
         assertThrows(NullPointerException.class, () -> {
             customShoppingListResponseDtoMapper.convert(customShoppingListItem);
         });
@@ -84,18 +88,18 @@ class CustomShoppingListResponseDtoMapperTest {
         assertEquals(2, actual.size());
     }
 
-    @Test
-    void mapAllToList_CustomShoppingListResponseDtoMapperTest_NullPointerException() {
+    @ParameterizedTest
+    @NullSource
+    void mapAllToList_CustomShoppingListResponseDtoMapperTest_NullPointerException(List<CustomShoppingListItem> nullList) {
         assertThrows(NullPointerException.class, () -> {
-            customShoppingListResponseDtoMapper.mapAllToList(null);
+            customShoppingListResponseDtoMapper.mapAllToList(nullList);
         });
     }
 
-    @Test
-    void mapAllToList_CustomShoppingListResponseDtoMapperTest_ShouldReturnEmptyList() {
-        List<CustomShoppingListItem> dtoList  = Arrays.asList();
-
-        List<CustomShoppingListItemResponseDto> actual = customShoppingListResponseDtoMapper.mapAllToList(dtoList);
+    @ParameterizedTest
+    @EmptySource
+    void mapAllToList_CustomShoppingListResponseDtoMapperTest_ShouldReturnEmptyList(List<CustomShoppingListItem> emptyList) {
+        List<CustomShoppingListItemResponseDto> actual = customShoppingListResponseDtoMapper.mapAllToList(emptyList);
 
         assertNotNull(actual);
         assertTrue(actual.isEmpty());
