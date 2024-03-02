@@ -19,6 +19,7 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class ShoppingListItemSpecificationTest {
+
     @Mock
     private CriteriaBuilder criteriaBuilderMock;
     @Mock
@@ -95,8 +96,8 @@ class ShoppingListItemSpecificationTest {
                 .value(1L)
                 .build());
         shoppingListItemSpecificationForIdCriteria = new ShoppingListItemSpecification(criteriaListForIdCriteria);
-        when(criteriaBuilderMock.conjunction()).thenReturn(allPredicateMock);
 
+        when(criteriaBuilderMock.conjunction()).thenReturn(allPredicateMock);
         when(criteriaBuilderMock.and(eq(allPredicateMock), any())).thenReturn(andIdPredicate);
 
         Predicate actual = shoppingListItemSpecificationForIdCriteria.toPredicate(shoppingListItemRootMock, criteriaQueryMock, criteriaBuilderMock);
@@ -114,7 +115,12 @@ class ShoppingListItemSpecificationTest {
         when(criteriaQueryMock.from(ShoppingListItemTranslation.class)).thenReturn(shoppingListItemTranslationRootMock);
         when(searchCriteriaForAll.getValue()).thenReturn("");
         when(criteriaBuilderMock.conjunction()).thenReturn(allPredicateMock);
+
         Predicate actual = shoppingListItemSpecification.getTranslationPredicate(shoppingListItemRootMock, criteriaQueryMock, criteriaBuilderMock, searchCriteriaForAll);
+
+        verify(criteriaBuilderMock).conjunction();
+        verify(criteriaBuilderMock, never()).and(any(), any());
+
         assertEquals(allPredicateMock,actual);
     }
 }
