@@ -1,5 +1,6 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
 import greencity.dto.category.CategoryDto;
 import greencity.entity.Category;
 import org.junit.jupiter.api.Test;
@@ -7,11 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 class CategoryDtoMapperTest {
+    
     private final ModelMapper modelMapper = new ModelMapper();
     private final CategoryDtoMapper categoryDtoMapper = new CategoryDtoMapper();
+    
     @Test
     void convert_CategoryDtoMapperTest_ShouldMapCorrectly() {
         CategoryDto categoryDto = new CategoryDto("Name");
@@ -34,7 +36,7 @@ class CategoryDtoMapperTest {
         Category actual = categoryDtoMapper.convert(categoryDto);
 
         assertNotNull(actual);
-        assertEquals(null, actual.getName());
+        assertNull(actual.getName());
     }
 
     @Test
