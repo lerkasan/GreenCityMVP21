@@ -5,6 +5,8 @@ import greencity.dto.category.CategoryDto;
 import greencity.entity.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -39,12 +41,11 @@ class CategoryDtoMapperTest {
         assertNull(actual.getName());
     }
 
-    @Test
-    void convert_CategoryDtoMapperTest_ShouldReturnNullPointerException() {
-        CategoryDto categoryDto = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_CategoryDtoMapperTest_ShouldReturnNullPointerException(CategoryDto nullCategoryDto) {
         assertThrows(NullPointerException.class, () -> {
-            categoryDtoMapper.convert(categoryDto);
+            categoryDtoMapper.convert(nullCategoryDto);
         });
     }
 
