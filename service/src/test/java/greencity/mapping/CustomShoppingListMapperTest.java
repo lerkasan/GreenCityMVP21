@@ -1,22 +1,25 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import greencity.dto.shoppinglistitem.CustomShoppingListItemResponseDto;
 import greencity.entity.CustomShoppingListItem;
 import greencity.enums.ShoppingListItemStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 class CustomShoppingListMapperTest {
+
     private final ModelMapper modelMapper = new ModelMapper();
     private final CustomShoppingListMapper customShoppingListMapper = new CustomShoppingListMapper();
+
     @Test
     void convert_CustomShoppingListMapperTest_ShouldMapCorrectly() {
         CustomShoppingListItemResponseDto customShoppingListItemResponseDto = new CustomShoppingListItemResponseDto();
@@ -40,7 +43,7 @@ class CustomShoppingListMapperTest {
     }
 
     @Test
-    void convert_CustomShoppingListMapperTest_ShouldMapToCategoryWithNullFields() {
+    void convert_CustomShoppingListMapperTest_ShouldMapWithNullFields() {
         CustomShoppingListItemResponseDto customShoppingListItemResponseDto = new CustomShoppingListItemResponseDto();
 
         CustomShoppingListItem actual = customShoppingListMapper.convert(customShoppingListItemResponseDto);
@@ -85,10 +88,11 @@ class CustomShoppingListMapperTest {
         assertEquals(2, actual.size());
     }
 
-    @Test
-    void mapAllToList_CustomShoppingListMapperTest_NullPointerException() {
+    @ParameterizedTest
+    @NullSource
+    void mapAllToList_CustomShoppingListMapperTest_NullPointerException(List<CustomShoppingListItemResponseDto> nullList) {
         assertThrows(NullPointerException.class, () -> {
-            customShoppingListMapper.mapAllToList(null);
+            customShoppingListMapper.mapAllToList(nullList);
         });
     }
 
