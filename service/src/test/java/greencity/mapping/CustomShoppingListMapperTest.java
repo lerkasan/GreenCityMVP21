@@ -8,6 +8,7 @@ import greencity.enums.ShoppingListItemStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -54,12 +55,11 @@ class CustomShoppingListMapperTest {
         assertNull(actual.getStatus());
     }
 
-    @Test
-    void convert_CustomShoppingListMapperTest_ShouldReturnNullPointerException() {
-        CustomShoppingListItemResponseDto customShoppingListItemResponseDto = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_CustomShoppingListMapperTest_ShouldReturnNullPointerException(CustomShoppingListItemResponseDto nullCustomShoppingListItemResponseDto) {
         assertThrows(NullPointerException.class, () -> {
-            customShoppingListMapper.convert(customShoppingListItemResponseDto);
+            customShoppingListMapper.convert(nullCustomShoppingListItemResponseDto);
         });
     }
 
@@ -96,11 +96,10 @@ class CustomShoppingListMapperTest {
         });
     }
 
-    @Test
-    void mapAllToList_CustomShoppingListMapperTest_ShouldReturnEmptyList() {
-        List<CustomShoppingListItemResponseDto> dtoList = Arrays.asList();
-
-        List<CustomShoppingListItem> actual = customShoppingListMapper.mapAllToList(dtoList);
+    @ParameterizedTest
+    @EmptySource
+    void mapAllToList_CustomShoppingListMapperTest_ShouldReturnEmptyList(List<CustomShoppingListItemResponseDto> emptyList) {
+        List<CustomShoppingListItem> actual = customShoppingListMapper.mapAllToList(emptyList);
 
         assertNotNull(actual);
         assertTrue(actual.isEmpty());
