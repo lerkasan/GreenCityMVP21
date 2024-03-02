@@ -1,15 +1,18 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import greencity.dto.user.EcoNewsAuthorDto;
 import greencity.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class EcoNewsAuthorDtoMapperTest {
+
     private final EcoNewsAuthorDtoMapper ecoNewsAuthorDtoMapper = new EcoNewsAuthorDtoMapper();
 
     @Test
@@ -28,7 +31,7 @@ class EcoNewsAuthorDtoMapperTest {
     }
 
     @Test
-    void convert_EcoNewsAuthorDtoMapperTest_ShouldMapWithNullFields() {
+    void convert_EcoNewsAuthorDtoMapperTestWithEmptySource_ShouldMapWithNullFields() {
         User author = new User();
         EcoNewsAuthorDto actual = ecoNewsAuthorDtoMapper.convert(author);
 
@@ -37,12 +40,11 @@ class EcoNewsAuthorDtoMapperTest {
         assertNull(actual.getName());
     }
 
-    @Test
-    void convert_EcoNewsAuthorDtoMapperTest_ShouldReturnNullPointerException() {
-        User author = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_EcoNewsAuthorDtoMapperTestWithNullSource_ShouldReturnNullPointerException(User nullAuthor) {
         assertThrows(NullPointerException.class, () -> {
-            ecoNewsAuthorDtoMapper.convert(author);
+            ecoNewsAuthorDtoMapper.convert(nullAuthor);
         });
     }
 }

@@ -1,5 +1,7 @@
 package greencity.mapping;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import greencity.dto.econewscomment.EcoNewsCommentAuthorDto;
 import greencity.dto.econewscomment.EcoNewsCommentDto;
 import greencity.entity.EcoNews;
@@ -9,34 +11,23 @@ import greencity.enums.CommentStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 class EcoNewsCommentDtoMapperTest {
+
     private final EcoNewsCommentDtoMapper ecoNewsCommentDtoMapper = new EcoNewsCommentDtoMapper();
     private LocalDateTime currentDate = LocalDateTime.now();
     private LocalDateTime previousDate = currentDate.minusMinutes(5L);
     private User user = new User();
+
     @Test
     void convert_EcoNewsCommentDtoMapperTest_ShouldMapCorrectly() {
         EcoNewsComment ecoNewsComment = new EcoNewsComment(158L,"Text", currentDate, currentDate,
                 null, null, user, new EcoNews(), false, false,new HashSet<>());
 
-        EcoNewsCommentDto expected = EcoNewsCommentDto.builder()
-                .id(ecoNewsComment.getId())
-                .modifiedDate(ecoNewsComment.getModifiedDate())
-                .status(CommentStatus.ORIGINAL)
-                .text(ecoNewsComment.getText())
-                .author(EcoNewsCommentAuthorDto.builder()
-                        .id(ecoNewsComment.getUser().getId())
-                        .name(ecoNewsComment.getUser().getName())
-                        .userProfilePicturePath(ecoNewsComment.getUser().getProfilePicturePath())
-                        .build())
-                .build();
-
+        EcoNewsCommentDto expected = expectedConvert(ecoNewsComment);
         EcoNewsCommentDto actual = ecoNewsCommentDtoMapper.convert(ecoNewsComment);
 
         assertNotNull(actual);
@@ -47,6 +38,7 @@ class EcoNewsCommentDtoMapperTest {
         assertEquals(ecoNewsComment.isCurrentUserLiked(), actual.isCurrentUserLiked());
         assertEquals(expected, actual);
     }
+
     @Test
     void convert_EcoNewsCommentDtoMapperTest_ShouldSetDeletedStatus() {
         EcoNewsComment ecoNewsComment = new EcoNewsComment(158L,"Text", previousDate, currentDate,
@@ -68,11 +60,25 @@ class EcoNewsCommentDtoMapperTest {
     }
 
     @Test
-    void convert_EcoNewsCommentDtoMapperTest_ShouldReturnNullPointerException() {
+    void convert_EcoNewsCommentDtoMapperTestWithEmptySource_ShouldReturnNullPointerException() {
         EcoNewsComment ecoNewsComment = new EcoNewsComment();
 
         assertThrows(NullPointerException.class, () -> {
             ecoNewsCommentDtoMapper.convert(ecoNewsComment);
         });
+    }
+
+    private EcoNewsCommentDto expectedConvert(EcoNewsComment ecoNewsComment) {
+        return EcoNewsCommentDto.builder()
+                .id(ecoNewsComment.getId())
+                .modifiedDate(ecoNewsComment.getModifiedDate())
+                .status(CommentStatus.ORIGINAL)
+                .text(ecoNewsComment.getText())
+                .author(EcoNewsCommentAuthorDto.builder()
+                        .id(ecoNewsComment.getUser().getId())
+                        .name(ecoNewsComment.getUser().getName())
+                        .userProfilePicturePath(ecoNewsComment.getUser().getProfilePicturePath())
+                        .build())
+                .build();
     }
 }
