@@ -1,10 +1,13 @@
 package greencity.mapping;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import greencity.dto.category.CategoryDtoResponse;
 import greencity.entity.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -32,7 +35,7 @@ class CategoryDtoResponseMapperTest {
     }
 
     @Test
-    void convert_CategoryDtoResponseMapperTest_ShouldMapToCategoryWithNullNameAndNullId() {
+    void convert_CategoryDtoResponseMapperTest_ShouldMapWithNullNameAndNullId() {
         Category category = new Category();
 
         CategoryDtoResponse actual = categoryDtoResponseMapper.convert(category);
@@ -42,10 +45,9 @@ class CategoryDtoResponseMapperTest {
         assertNull(actual.getName());
     }
 
-    @Test
-    void convert_CategoryDtoResponseMapperTest_ShouldReturnNullPointerException() {
-        Category category = null;
-
+    @ParameterizedTest
+    @NullSource
+    void convert_CategoryDtoResponseMapperTest_ShouldReturnNullPointerException(Category category) {
         assertThrows(NullPointerException.class, () -> {
             categoryDtoResponseMapper.convert(category);
         });
