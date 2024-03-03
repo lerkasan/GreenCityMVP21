@@ -4,6 +4,7 @@ import greencity.dto.filter.FilterHabitDto;
 import greencity.entity.Habit;
 import greencity.entity.HabitTranslation;
 import greencity.entity.Habit_;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.jpa.domain.Specification;
 import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Optional;
  *
  * @author Hutei Volodymyr
  */
+@EqualsAndHashCode
 public class HabitFilter implements Specification<Habit> {
     private final transient FilterHabitDto filterHabitDto;
     private static final String DEFAULT_HABIT_IMAGE =
