@@ -1,5 +1,9 @@
 package greencity.validator;
 
+import static greencity.ModelUtils.getAddEcoNewsDtoRequest;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import greencity.dto.econews.AddEcoNewsDtoRequest;
 import greencity.exception.exceptions.InvalidURLException;
 import greencity.exception.exceptions.WrongCountOfTagsException;
@@ -15,10 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static greencity.ModelUtils.getAddEcoNewsDtoRequest;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @ExtendWith(SpringExtension.class)
 class EcoNewsDtoRequestValidatorTest {
     private EcoNewsDtoRequestValidator validator;
@@ -29,7 +29,6 @@ class EcoNewsDtoRequestValidatorTest {
         validator = new EcoNewsDtoRequestValidator();
         request = getAddEcoNewsDtoRequest();
     }
-
 
     @ParameterizedTest
     @MethodSource("validSourceProvider")
@@ -66,8 +65,6 @@ class EcoNewsDtoRequestValidatorTest {
     private List<String> getTags() {
         return Arrays.asList("tag1","tag2","tag3","tag4");
     }
-
-
 
     private static Stream<String> validSourceProvider(){
         return Stream.of(
