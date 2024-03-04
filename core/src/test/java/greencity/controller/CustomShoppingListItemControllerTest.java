@@ -1,5 +1,15 @@
 package greencity.controller;
 
+import static java.lang.String.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import greencity.ModelUtils;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import greencity.dto.shoppinglistitem.CustomShoppingListItemResponseDto;
 import greencity.enums.ShoppingListItemStatus;
 import greencity.exception.exceptions.BadRequestException;
@@ -25,26 +35,16 @@ import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.lang.String.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import greencity.ModelUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
-
 @ExtendWith(MockitoExtension.class)
 public class CustomShoppingListItemControllerTest {
     private static final String controllerLink = "/custom/shopping-list-items";
+    private final ObjectMapper jsonMapper = new ObjectMapper();
     private MockMvc mockMvc;
 
     @InjectMocks
@@ -162,7 +162,6 @@ public class CustomShoppingListItemControllerTest {
                         .isInstanceOf(MethodArgumentNotValidException.class));
     }
 
-
     @SneakyThrows
     @ParameterizedTest
     @MethodSource("shoppingListItemStatusProvider")
@@ -184,7 +183,6 @@ public class CustomShoppingListItemControllerTest {
 
         verify(listItemService).updateItemStatus(userId, itemId,status);
     }
-
 
     @SneakyThrows
     @ParameterizedTest
@@ -250,7 +248,6 @@ public class CustomShoppingListItemControllerTest {
         verify(listItemService).updateItemStatusToDone(userId, itemId);
     }
 
-
     @SneakyThrows
     @ParameterizedTest
     @CsvSource({"1, '1,2,3,4'"})
@@ -282,7 +279,6 @@ public class CustomShoppingListItemControllerTest {
 
         verify(listItemService).bulkDelete(ids);
     }
-
 
     @SneakyThrows
     @ParameterizedTest
@@ -327,8 +323,6 @@ public class CustomShoppingListItemControllerTest {
         verify(listItemService).findAllUsersCustomShoppingListItemsByStatus(userId,null);
     }
 
-
-
     private static Stream<String> shoppingListItemStatusProvider(){
         return Stream.of(ShoppingListItemStatus.values())
                 .map(Enum::name);
@@ -342,10 +336,8 @@ public class CustomShoppingListItemControllerTest {
 
     @SneakyThrows
     private<T> String writeAsString(T element){
-        var objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(element);
+        return jsonMapper.writeValueAsString(element);
     }
-
 
     private List<CustomShoppingListItemResponseDto> generateCustomShoppingListItemResponseDtos(){
         return List.of(new CustomShoppingListItemResponseDto(1L,"text1", ShoppingListItemStatus.ACTIVE),
