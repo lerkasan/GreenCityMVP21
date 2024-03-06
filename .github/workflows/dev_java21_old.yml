@@ -5,26 +5,27 @@ on:
     branches:
       - main
       - master
-#      - dev_java21
-#      - my_dev_java21
+      - dev_java21
+      - my_dev_java21
 
   pull_request:
     branches:
       - main
       - master
-#      - dev_java21
-#      - my_dev_java21
+      - dev_java21
+      - my_dev_java21
 
 env:
   JAVA_VERSION: 21
-  JAVA_DISTRIBUTION: 'oracle'  # 'temurin'
+  JAVA_DISTRIBUTION: 'oracle'  # or 'temurin'
   SETUP_JAVA_CACHE: 'maven'
 
 jobs:
 
   test:
     name: Run Backend Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+#    runs-on: ubuntu-latest  # fails
     steps:
       - name: Checkout backend repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
