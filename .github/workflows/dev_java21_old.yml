@@ -18,7 +18,7 @@ on:
 env:
   JAVA_VERSION: 21
   JAVA_DISTRIBUTION: 'oracle'
-  SETUP_JAVA_CACHE: 'maven'
+#  SETUP_JAVA_CACHE: 'maven'
 
 jobs:
 
@@ -34,7 +34,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-          cache: ${{ env.SETUP_JAVA_CACHE }}
+#          cache: ${{ env.SETUP_JAVA_CACHE }}
 
 #      - name: Customize Maven version
 #        uses: stCarolas/setup-maven@v5
