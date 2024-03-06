@@ -18,14 +18,13 @@ on:
 env:
   JAVA_VERSION: 21
   JAVA_DISTRIBUTION: 'oracle'
-#  SETUP_JAVA_CACHE: 'maven'
 
 jobs:
 
   test:
     name: Run Backend Unit Tests
     # runs-on: ubuntu-latest  # fails
-    runs-on: ubuntu-22.04  # works
+    runs-on: ubuntu-22.04  # sometimes fails
     # runs-on: ubuntu-20.04  # works
     steps:
       - name: Checkout backend repository
@@ -36,7 +35,6 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-#          cache: ${{ env.SETUP_JAVA_CACHE }}
 
       - name: Run Unit Tests and Build
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
