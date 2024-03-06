@@ -24,8 +24,8 @@ jobs:
 
   test:
     name: Run Backend Unit Tests
-    runs-on: ubuntu-20.04
-#    runs-on: ubuntu-latest  # fails
+#    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest  # 22.04
     steps:
       - name: Checkout backend repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
@@ -50,7 +50,7 @@ jobs:
 #          rm -rf $(mvn help:evaluate -Dexpression=settings.localRepository -q -DforceStdout)
 ##          rm -rf ~/.m2/repository
 
-      - name: Run Unit Tests via Maven
+      - name: Run Unit Tests and Build
         run: mvn --batch-mode --no-transfer-progress dependency:list clean test
 
       - name: Upload JUnit Test Report as Artifact
@@ -71,21 +71,21 @@ jobs:
           path: |
             **/target/surefire-reports/*.xml
           reporter: java-junit
-
-  build:
-    name: Build Backend
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout backend repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
-
-      - name: Set up JDK
-        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93   # v4.0.0
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          cache: ${{ env.SETUP_JAVA_CACHE }}
+#
+#  build:
+#    name: Build Backend
+#    needs: test
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout backend repository
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93   # v4.0.0
+#        with:
+#          java-version: ${{ env.JAVA_VERSION }}
+#          distribution: ${{ env.JAVA_DISTRIBUTION }}
+#          cache: ${{ env.SETUP_JAVA_CACHE }}
 
       - name: Build a JAR package via Maven
         run: mvn --batch-mode --no-transfer-progress -DskipTests dependency:list clean package
