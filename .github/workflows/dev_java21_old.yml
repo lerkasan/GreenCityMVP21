@@ -18,13 +18,13 @@ on:
 env:
   JAVA_VERSION: 21
   JAVA_DISTRIBUTION: 'oracle'
-#  SETUP_JAVA_CACHE: 'maven'
+  SETUP_JAVA_CACHE: 'maven'
 
 jobs:
 
   test:
     name: Run Backend Unit Tests
-    runs-on: ubuntu-20.04  # 22.04
+    runs-on: ubuntu-20.04
 #    runs-on: ubuntu-latest  # 22.04
     steps:
       - name: Checkout backend repository
@@ -35,7 +35,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
-#          cache: ${{ env.SETUP_JAVA_CACHE }}
+          cache: ${{ env.SETUP_JAVA_CACHE }}
 
 #      - name: Customize Maven version
 #        uses: stCarolas/setup-maven@v5
@@ -94,4 +94,4 @@ jobs:
         with:
           name: JAR Packages
           path: |
-            **/target/*.jar
+            **/*.jar
