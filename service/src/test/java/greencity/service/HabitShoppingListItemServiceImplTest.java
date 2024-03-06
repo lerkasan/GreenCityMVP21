@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -47,7 +48,7 @@ class HabitShoppingListItemServiceImplTest {
 
         Long habitId = 1L;
         Long shoppingId = 1L;
-        List<Long> shoppingListIds = List.of(shoppingId);
+        List<Long> shoppingListIds = Collections.singletonList(shoppingId);
 
         when(habitRepo.findById(habitId)).thenReturn(Optional.of(habit));
         when(shoppingListItemRepo.findById(shoppingId)).thenReturn(Optional.of(shoppingListItem));
@@ -63,7 +64,7 @@ class HabitShoppingListItemServiceImplTest {
     void unlinkShoppingListItemsFromHabit_whenHabitRepoReturnEmptyOptional_throwNoSuchElementException() {
         Long habitId = 1L;
         Long shoppingId = 1L;
-        List<Long> shoppingListIds = List.of(shoppingId);
+        List<Long> shoppingListIds = Collections.singletonList(shoppingId);
 
         when(habitRepo.findById(habitId)).thenReturn(Optional.empty());
 
@@ -86,7 +87,7 @@ class HabitShoppingListItemServiceImplTest {
 
         Long habitId = 1L;
         Long shoppingId = 1L;
-        List<Long> shoppingListIds = List.of(shoppingId);
+        List<Long> shoppingListIds = Collections.singletonList(shoppingId);
 
         when(habitRepo.findById(habitId)).thenReturn(Optional.of(habit));
         when(shoppingListItemRepo.findById(shoppingId)).thenReturn(Optional.empty());
