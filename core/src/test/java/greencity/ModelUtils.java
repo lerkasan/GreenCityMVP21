@@ -247,13 +247,17 @@ public class ModelUtils {
             .enrollDate(LocalDate.now()).build();
     }
 
+    public static HabitVO getHabitVO() {
+        return HabitVO.builder()
+            .id(1L)
+            .image("string")
+            .build();
+    }
+
     public static HabitFactVO getHabitFactVO() {
         return HabitFactVO.builder()
             .id(1L)
-            .habit(HabitVO.builder()
-                .id(1L)
-                .image("string")
-                .build())
+            .habit(getHabitVO())
             .translations(Collections.singletonList(HabitFactTranslationVO.builder()
                 .id(1L)
                 .content("content")
@@ -271,6 +275,19 @@ public class ModelUtils {
         return HabitFactPostDto.builder()
             .translations(List.of(getLanguageTranslationDTO()))
             .habit(new HabitIdRequestDto(1L))
+            .build();
+    }
+
+    public static HabitFactDtoResponse getHabitFactDtoResponse() {
+        return HabitFactDtoResponse.builder()
+            .id(1L)
+            .habit(getHabitVO())
+            .translations(Collections.singletonList(HabitFactTranslationDto.builder()
+                .id(1L)
+                .content("content")
+                .factOfDayStatus(FactOfDayStatus.POTENTIAL)
+                .language(getLanguageDTO())
+                .build()))
             .build();
     }
 
