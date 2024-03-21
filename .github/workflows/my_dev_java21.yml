@@ -45,7 +45,15 @@ jobs:
 #        run: mvn --batch-mode --no-transfer-progress dependency:list clean test
 
       - name: Run Unit Tests with Coverage and Build a JAR package
-        run: mvn --batch-mode --no-transfer-progress org.jacoco:jacoco-maven-plugin:prepare-agent clean package
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn --batch-mode --no-transfer-progress org.jacoco:jacoco-maven-plugin:prepare-agent clean package sonar:sonar \
+            -Dsonar.organization=lerkasan
+            -Dsonar.projectKey=GreenCityMVP21
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.newCode.referenceBranch=my_dev_java21
+            -Dsonar.pullrequest.base=my_dev_java21
 
       - name: Publish JUnit Test Reports
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
@@ -56,21 +64,22 @@ jobs:
             **/target/surefire-reports/*.xml
           reporter: java-junit
 
-      - name: Run SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        with:
-          args: >
-            -Dsonar.organization=lerkasan
-            -Dsonar.projectKey=GreenCityMVP21
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.newCode.referenceBranch=my_dev_java21
-            -Dsonar.pullrequest.base=my_dev_java21
+#      - name: Run SonarCloud Scan
+#        uses: sonarsource/sonarcloud-github-action@master
+#        with:
+#          args: >
+#            -Dsonar.organization=lerkasan
+#            -Dsonar.projectKey=GreenCityMVP21
+#            -Dsonar.host.url=https://sonarcloud.io
+#            -Dsonar.newCode.referenceBranch=my_dev_java21
+#            -Dsonar.pullrequest.base=my_dev_java21
+
 #            -Dsonar.projectVersion=
 #            -Dsonar.binaries=target/classes
 #            -Dsonar.dynamicAnalysis=reuseReports
-        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        env:
+##          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Upload JUnit Test Report as Artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3   # v4.3.1
