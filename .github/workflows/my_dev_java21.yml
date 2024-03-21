@@ -49,10 +49,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn --batch-mode --no-transfer-progress org.jacoco:jacoco-maven-plugin:prepare-agent clean package sonar:sonar \
-            -Dsonar.organization=lerkasan
-            -Dsonar.projectKey=GreenCityMVP21
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.newCode.referenceBranch=my_dev_java21
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=lerkasan \
+            -Dsonar.projectKey=GreenCityMVP21 \
+            -Dsonar.newCode.referenceBranch=my_dev_java21 \
             -Dsonar.pullrequest.base=my_dev_java21
 
       - name: Publish JUnit Test Reports
