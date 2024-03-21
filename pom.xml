@@ -35,11 +35,12 @@
         <modelmapper.version>3.2.0</modelmapper.version>
         <checkstyle-maven-plugin.version>3.3.1</checkstyle-maven-plugin.version>
         <formatter.maven.plugin.version>2.23.0</formatter.maven.plugin.version>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.exclusions>**/config/*</sonar.exclusions>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.java.checkstyle.reportPaths>${project.basedir}/target/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
         <sonar.language>java</sonar.language>
         <test.containers.version>1.19.4</test.containers.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>

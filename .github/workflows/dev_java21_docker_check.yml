@@ -1,0 +1,30 @@
+name: CI/CD GreenCity
+
+on:
+  push:
+    branches:
+      - main
+      - master
+   #   - my_dev_java21
+
+  pull_request:
+    branches:
+      - main
+      - master
+   #  - my_dev_java21
+
+  # for debugging purposes
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    name: Run Backend Unit Tests
+    runs-on: ubuntu-latest
+    #    container: maven:3.9.6-eclipse-temurin-21-alpine
+    steps:
+#      - name: Checkout backend repository
+#        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
+
+      - name: Pull and Run Docker Image
+        run: docker run lerkasan/experiment:latest
