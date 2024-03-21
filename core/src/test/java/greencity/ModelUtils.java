@@ -16,9 +16,7 @@ import greencity.dto.habittranslation.HabitTranslationDto;
 import greencity.dto.language.LanguageDTO;
 import greencity.dto.language.LanguageTranslationDTO;
 import greencity.dto.language.LanguageVO;
-import greencity.dto.shoppinglistitem.CustomShoppingListItemResponseDto;
-import greencity.dto.shoppinglistitem.ShoppingListItemPostDto;
-import greencity.dto.shoppinglistitem.ShoppingListItemRequestDto;
+import greencity.dto.shoppinglistitem.*;
 import greencity.dto.tag.TagPostDto;
 import greencity.dto.tag.TagTranslationVO;
 import greencity.dto.tag.TagViewDto;
@@ -249,13 +247,17 @@ public class ModelUtils {
             .enrollDate(LocalDate.now()).build();
     }
 
+    public static HabitVO getHabitVO() {
+        return HabitVO.builder()
+            .id(1L)
+            .image("string")
+            .build();
+    }
+
     public static HabitFactVO getHabitFactVO() {
         return HabitFactVO.builder()
             .id(1L)
-            .habit(HabitVO.builder()
-                .id(1L)
-                .image("string")
-                .build())
+            .habit(getHabitVO())
             .translations(Collections.singletonList(HabitFactTranslationVO.builder()
                 .id(1L)
                 .content("content")
@@ -273,6 +275,19 @@ public class ModelUtils {
         return HabitFactPostDto.builder()
             .translations(List.of(getLanguageTranslationDTO()))
             .habit(new HabitIdRequestDto(1L))
+            .build();
+    }
+
+    public static HabitFactDtoResponse getHabitFactDtoResponse() {
+        return HabitFactDtoResponse.builder()
+            .id(1L)
+            .habit(getHabitVO())
+            .translations(Collections.singletonList(HabitFactTranslationDto.builder()
+                .id(1L)
+                .content("content")
+                .factOfDayStatus(FactOfDayStatus.POTENTIAL)
+                .language(getLanguageDTO())
+                .build()))
             .build();
     }
 
@@ -394,6 +409,14 @@ public class ModelUtils {
             .image("https://csb10032000a548f571.blob.core.windows.net/allfiles/photo_2021-06-01_15-39-56.jpg")
             .tagIds(Set.of(20L))
             .build();
+    }
+
+    public static BulkSaveCustomShoppingListItemDto getBulkSaveCustomShoppingListItemDto(){
+        var items = List.of(new CustomShoppingListItemSaveRequestDto("text1"),
+                new CustomShoppingListItemSaveRequestDto("text2"),
+                new CustomShoppingListItemSaveRequestDto("text3"));
+
+        return  new BulkSaveCustomShoppingListItemDto(items);
     }
 
 }

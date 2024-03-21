@@ -74,7 +74,7 @@ public class ManagementHabitServiceImpl implements ManagementHabitService {
         List<HabitManagementDto> habitDtos = habits.getContent()
             .stream()
             .map(habit -> modelMapper.map(habit, HabitManagementDto.class))
-            .collect(Collectors.toList());
+            .toList();
         return new PageableDto<>(
             habitDtos,
             habits.getTotalElements(),
@@ -115,7 +115,7 @@ public class ManagementHabitServiceImpl implements ManagementHabitService {
                             languageService.findByCode(habitTranslationDto.getLanguageCode()),
                             Language.class))
                         .build())
-                    .collect(Collectors.toList()))
+                    .toList())
             .build();
         habit.getHabitTranslations().forEach(habitTranslation -> habitTranslation.setHabit(habit));
         return habit;
@@ -147,7 +147,7 @@ public class ManagementHabitServiceImpl implements ManagementHabitService {
     @Transactional
     public void update(HabitManagementDto habitManagementDto, MultipartFile image) {
         Habit habit = habitRepo.findById(habitManagementDto.getId())
-            .orElseThrow(() -> new WrongIdException(ErrorMessage.HABIT_NOT_FOUND_BY_ID));
+            .orElseThrow(() -> new WrongIdException(ErrorMessage.HABIT_NOT_FOUND_BY_ID)); // Seems really strange
 
         Map<String, HabitTranslationManagementDto> translationDtoMap = getMapTranslationsDtos(habitManagementDto);
         habit.getHabitTranslations().forEach(
