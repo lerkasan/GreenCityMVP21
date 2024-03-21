@@ -51,7 +51,7 @@ jobs:
           mvn --batch-mode --no-transfer-progress org.jacoco:jacoco-maven-plugin:prepare-agent clean package sonar:sonar \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.organization=lerkasan \
-            -Dsonar.projectKey=GreenCityMVP21 \
+            -Dsonar.projectKey=lerkasan_GreenCityMVP21 \
             -Dsonar.newCode.referenceBranch=my_dev_java21 \
             -Dsonar.pullrequest.base=my_dev_java21
 
