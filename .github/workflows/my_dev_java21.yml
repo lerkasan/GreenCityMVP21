@@ -23,12 +23,16 @@ jobs:
 
   test:
     name: Run Backend Unit Tests
+    runs-on: ubuntu-20.04     # always works
     # runs-on: ubuntu-latest  # sometimes works
-    runs-on: ubuntu-22.04  # sometimes works
-    # runs-on: ubuntu-20.04  # works
+    # runs-on: ubuntu-22.04   # sometimes works
+
     steps:
       - name: Checkout backend repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11     # v4.1.1
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of SonarQube reporting
+          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93   # v4.0.0
@@ -36,16 +40,11 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.JAVA_DISTRIBUTION }}
 
-      - name: Run Unit Tests and Build
-        run: mvn --batch-mode --no-transfer-progress dependency:list clean test
+#      - name: Run Unit Tests
+#        run: mvn --batch-mode --no-transfer-progress dependency:list clean test
 
-      - name: Upload JUnit Test Report as Artifact
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3   # v4.3.1
-        if: success() || failure()
-        with:
-          name: JUnit Test Report
-          path: |
-            **/target/surefire-reports/*.xml
+      - name: Run Unit Tests with Coverage and Build a JAR package
+        run: mvn --batch-mode --no-transfer-progress org.jacoco:jacoco-maven-plugin:prepare-agent clean package
 
       - name: Publish JUnit Test Reports
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
@@ -56,8 +55,40 @@ jobs:
             **/target/surefire-reports/*.xml
           reporter: java-junit
 
-      - name: Build a JAR package via Maven
-        run: mvn --batch-mode --no-transfer-progress -DskipTests dependency:tree clean package
+      - name: Run SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.organization=lerkasan
+            -Dsonar.projectKey=GreenCityMVP21
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.newCode.referenceBranch=my_dev_java21
+            -Dsonar.pullrequest.base=my_dev_java21
+#            -Dsonar.projectVersion=
+#            -Dsonar.binaries=target/classes
+#            -Dsonar.dynamicAnalysis=reuseReports
+        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload JUnit Test Report as Artifact
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3   # v4.3.1
+        if: success() || failure()
+        with:
+          name: JUnit Test Report
+          path: |
+            **/target/surefire-reports/*.xml
+
+      - name: Upload JaCoCo Coverage Report as Artifact
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3   # v4.3.1
+        if: success() || failure()
+        with:
+          name: JaCoCo Coverage Report
+          path: |
+            **/target/site/jacoco
+
+#      - name: Build a JAR package via Maven
+#        run: mvn --batch-mode --no-transfer-progress -DskipTests dependency:tree clean package
 
       - name: Upload JAR packages as Artifact
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3   # v4.3.1
