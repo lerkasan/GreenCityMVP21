@@ -35,11 +35,6 @@
         <modelmapper.version>3.2.0</modelmapper.version>
         <checkstyle-maven-plugin.version>3.3.1</checkstyle-maven-plugin.version>
         <formatter.maven.plugin.version>2.23.0</formatter.maven.plugin.version>
-<!--        <sonar.organization>lerkasan</sonar.organization>-->
-<!--        <sonar.projectKey>GreenCityMVP21</sonar.projectKey>-->
-<!--        <sonar.host.url>https://sonarcloud.io</sonar.host.url>-->
-<!--        <sonar.newCode.referenceBranch>my_dev_java21</sonar.newCode.referenceBranch>-->
-<!--        <sonar.pullrequest.base>my_dev_java21</sonar.pullrequest.base>-->
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
