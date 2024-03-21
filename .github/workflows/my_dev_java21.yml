@@ -52,8 +52,9 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.organization=lerkasan \
             -Dsonar.projectKey=lerkasan_GreenCityMVP21 \
-            -Dsonar.newCode.referenceBranch=my_dev_java21 \
-            -Dsonar.pullrequest.base=my_dev_java21
+            -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
+            -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} \
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
 
       - name: Publish JUnit Test Reports
         uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8   # v1.8.0
