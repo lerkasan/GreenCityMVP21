@@ -21,8 +21,9 @@ env:
 
 jobs:
 
-  test:
-    name: Run Backend Unit Tests
+  test_and_build:
+    name: Test and Build
+    environment: test
     runs-on: ubuntu-20.04     # always works
     # runs-on: ubuntu-latest  # sometimes works
     # runs-on: ubuntu-22.04   # sometimes works
